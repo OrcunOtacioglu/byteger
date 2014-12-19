@@ -23,7 +23,6 @@ class MySQL implements BytectInterface
 	{
 		try{
 			$this->_pdo = new PDO('mysql:host=' . Config::get('mysql/host') . ';charset=' . Config::get('mysql/charset'), Config::get('mysql/username'), Config::get('mysql/password'));
-			echo 'Connection successfull';
 		} catch(PDOException $e) {
 			die($e->getMessage());
 		}
@@ -34,7 +33,7 @@ class MySQL implements BytectInterface
 	 * @param  string $dbName database name
 	 * @return void         Creates the database with given name
 	 */
-	public function create($dbName) {
+	public function create($dbName = null) {
 
 		if(!isset($dbName)) {
 			return false;
@@ -50,7 +49,7 @@ class MySQL implements BytectInterface
 	 * @param  string $dbName database name
 	 * @return void         Drops the database
 	 */
-	public function drop($dbName) {
+	public function drop($dbName = null) {
 
 		if(!isset($dbName)) {
 			return false;
@@ -66,7 +65,7 @@ class MySQL implements BytectInterface
 	 * @param  string $dbName database name
 	 * @return void         Selects the database
 	 */
-	public function select($dbName) {
+	public function select($dbName = null) {
 
 		if(!isset($dbName)) {
 			return false;
