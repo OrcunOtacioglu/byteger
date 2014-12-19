@@ -1,0 +1,22 @@
+{
+	"name": "bytect",
+	"description": "Simple database layer for MySQL, MongoDB, SqLite and PostreSQL.",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Orcun Otacioglu",
+			"email": "otacioglu.orcun@gmail.com"
+		}
+	],
+	"require": {
+		"ext-pdo": "*"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "~4.0"
+	},
+	"autoload": {
+		"psr-0": {
+			"Otacioglu\\": "src/"
+		}
+	}
+}
