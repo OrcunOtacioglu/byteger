@@ -10,7 +10,7 @@ class Config
 {
 	/**
 	 * Returns the value of a given path
-	 * @param  path $path index of an option inside the init file
+	 * @param  string $path index of an option inside the init file
 	 * @return string      Returns the key of the given index
 	 */
 	public static function get($path = null)
@@ -32,7 +32,5 @@ class Config
 
 			return $config;
 		}
-
-		return false;
 	}
 }
