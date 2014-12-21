@@ -8,6 +8,12 @@ class ConnectionTest extends PHPUnit_Framework_TestCase
 {
 	public $driver;
 
+	public function testConfigGet()
+	{
+		$config = Config::get();
+		$this->assertEquals(false, $config);
+	}
+
 	public function testDefaultDriver()
 	{
 		$this->driver = Config::get('defaultDriver');

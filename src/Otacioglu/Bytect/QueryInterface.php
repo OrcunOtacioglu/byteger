@@ -2,13 +2,21 @@
 
 interface QueryInterface
 {
-	public function query();
+	public function query($sql, $params = array());
 
-	public function insert();
+	public function insert($table, $fields = array());
 
-	public function get();
+	public function get($column, $table, $where);
 
-	public function delete();
+	public function delete($table, $where);
 
-	public function update();
+	public function update($table, $id, $fields);
+
+	public function results();
+
+	public function first();
+
+	public function error();
+
+	public function count();
 }
