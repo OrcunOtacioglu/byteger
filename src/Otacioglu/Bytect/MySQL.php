@@ -10,7 +10,6 @@
  */
 use Otacioglu\Support\Config;
 use PDO;
-use PDOException;
 
 class MySQL implements BytectInterface, QueryInterface
 {
@@ -38,7 +37,8 @@ class MySQL implements BytectInterface, QueryInterface
 	 * @param  string $dbName database name
 	 * @return void         Creates the database with given name
 	 */
-	public function create($dbName = null) {
+	public function create($dbName = null) 
+	{
 
 		if(isset($dbName)) {
 			
@@ -54,7 +54,8 @@ class MySQL implements BytectInterface, QueryInterface
 	 * @param  string $dbName database name
 	 * @return void         Drops the database
 	 */
-	public function drop($dbName = null) {
+	public function drop($dbName = null) 
+	{
 
 		if(isset($dbName)) {
 	
@@ -70,20 +71,42 @@ class MySQL implements BytectInterface, QueryInterface
 	 * @param  string $dbName database name
 	 * @return void         Selects the database
 	 */
-	public function select($dbName = null) {
+	public function select($dbName) 
+	{
+		return $this->_pdo->exec("USE {$dbName}");
+	}
 
-		if(isset($dbName)) {
-			
-			$this->_pdo = null;
+	/**
+	 * Create a MySQL database table
+	 * @param  string $tableName table name
+	 * @return void            
+	 */
+	public function createTable($tableName)
+	{
+		$sql = "CREATE TABLE {$tableName}(
+			ID INT(1) AUTO_INCREMENT PRIMARY KEY
+		);";
 
-			try{
-				$this->_pdo = new PDO('mysql:host=' . Config::get('mysql/host') . ';dbname=' . $dbName . ';charset=' . Config::get('mysql/charset'), Config::get('mysql/username'), Config::get('mysql/password'));
-				return "Selecting database: {$dbName} is successfull.";
-			} catch(PDOException $e) {
-				die($e->getMessage());
-			}
+		try{
+			$this->_pdo->exec($sql);
+		} catch(PDOException $e) {
+			die($e->getMessage());
 		}
-		return false;
+	}
+
+	/**
+	 * Drop an existing database table
+	 * @param  string $tableName table name
+	 * @return void            
+	 */
+	public function dropTable($tableName)
+	{
+		$sql = "DROP TABLE {$tableName}";
+		try{
+			$this->_pdo->exec($sql);
+		} catch(PDOException $e) {
+			die($e->getMessage());
+		}
 	}
 
 	/**

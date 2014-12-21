@@ -28,15 +28,12 @@ class Bytect implements BytectInterface, QueryInterface
 		switch ($type) {
 				case 'mysql':
 					return $this->_driver = new MySQL();
-					break;
-				
+					
 				case 'mongodb':
 					return true;
-					break;
 					
 				default:
 					return $this->_driver = new MySQL();
-					break;
 		}	
 	}
 
@@ -68,6 +65,26 @@ class Bytect implements BytectInterface, QueryInterface
 	public function select($dbName)
 	{
 		return $this->_driver->select($dbName);
+	}
+
+	/**
+	 * Create a database table
+	 * @param  string $tableName table name
+	 * @return void            
+	 */
+	public function createTable($tableName)
+	{
+		return $this->_driver->createTable($tableName);
+	}
+
+	/**
+	 * Drop an existing table
+	 * @param  string $tableName table name
+	 * @return void            
+	 */
+	public function dropTable($tableName)
+	{
+		return $this->_driver->dropTable($tableName);
 	}
 
 	/**
