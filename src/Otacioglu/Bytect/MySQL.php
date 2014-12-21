@@ -11,7 +11,7 @@
 use Otacioglu\Support\Config;
 use PDO;
 
-class MySQL implements BytectInterface
+class MySQL implements BytectInterface, QueryInterface
 {
 
 	private $_pdo,
@@ -146,9 +146,9 @@ class MySQL implements BytectInterface
 	 * @param  array $where query parameters
 	 * @return void        
 	 */
-	public function get($table, $where)
+	public function get($column, $table, $where)
 	{
-		return $this->action('SELECT *', $table, $where);
+		return $this->action("SELECT {$column}" , $table, $where);
 	}
 
 	/**
