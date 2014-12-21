@@ -10,6 +10,7 @@
  */
 use Otacioglu\Support\Config;
 use PDO;
+use PDOException;
 
 class MySQL implements BytectInterface, QueryInterface
 {
