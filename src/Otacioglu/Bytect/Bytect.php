@@ -14,8 +14,8 @@ class Bytect implements BytectInterface, QueryInterface
 			$_error = false;
 
 	/**
-	 * Sets the default database driver.
-	 * @param Config $type Get the specified driver type from init file.
+	 * Sets the dafault driver
+	 * @param string $type 
 	 */
 	public function __construct($type)
 	{
@@ -30,6 +30,9 @@ class Bytect implements BytectInterface, QueryInterface
 					return $this->_driver = new MySQL();
 					break;
 				
+				case 'mongodb':
+					return true;
+
 				default:
 					return $this->_driver = new MySQL();
 					break;
@@ -66,26 +69,58 @@ class Bytect implements BytectInterface, QueryInterface
 		return $this->_driver->select($dbName);
 	}
 
+	/**
+	 * The actual query to run
+	 * @param  string $sql    SQL query
+	 * @param  array  $params query parameters
+	 * @return void         
+	 */
 	public function query($sql, $params = array())
 	{
 		return $this->_driver->query($sql, $params);
 	}
 
+	/**
+	 * Insert objects to the database
+	 * @param  string $table  table name
+	 * @param  array  $fields fields to insert
+	 * @return void         
+	 */
 	public function insert($table, $fields = array())
 	{
 		return $this->_driver->insert($table, $fields);
 	}
 
+	/**
+	 * Retrieve fields from database
+	 * @param  string $column column name
+	 * @param  string $table  table name
+	 * @param  array $where   query parameters
+	 * @return object         
+	 */
 	public function get($column, $table, $where)
 	{
 		return $this->_driver->get($column, $table, $where);
 	}
 
+	/**
+	 * Delete fields from database
+	 * @param  string $table table name
+	 * @param  array $where  query parameters
+	 * @return void        
+	 */
 	public function delete($table, $where)
 	{
 		return $this->_driver->delete($table, $where);
 	}
 
+	/**
+	 * Update table fields
+	 * @param  string $table   table name
+	 * @param  integer $id     object id
+	 * @param  array $fields   fields to update
+	 * @return void
+	 */
 	public function update($table, $id, $fields)
 	{
 		return $this->_driver->update($table, $id, $fields);

@@ -10,6 +10,7 @@
  */
 use Otacioglu\Support\Config;
 use PDO;
+use PDOException;
 
 class MySQL implements BytectInterface, QueryInterface
 {
@@ -21,7 +22,7 @@ class MySQL implements BytectInterface, QueryInterface
 			$_error = false;
 
 	/**
-	 * Create the server connection 
+	 * Create the driver connection.
 	 */
 	public function __construct()
 	{
@@ -39,13 +40,13 @@ class MySQL implements BytectInterface, QueryInterface
 	 */
 	public function create($dbName = null) {
 
-		if(!isset($dbName)) {
-			return false;
-		}
-
-		$sql = "CREATE DATABASE {$dbName}";
+		if(isset($dbName)) {
+			
+			$sql = "CREATE DATABASE {$dbName}";
 	
-		return $this->_pdo->query($sql);
+			return $this->_pdo->query($sql);
+		}
+		return false;
 	}
 
 	/**
@@ -55,13 +56,13 @@ class MySQL implements BytectInterface, QueryInterface
 	 */
 	public function drop($dbName = null) {
 
-		if(!isset($dbName)) {
-			return false;
+		if(isset($dbName)) {
+	
+			$sql = "DROP DATABASE {$dbName}";
+
+			return $this->_pdo->query($sql);
 		}
-
-		$sql = "DROP DATABASE {$dbName}";
-
-		return $this->_pdo->query($sql);
+		return false;
 	}
 
 	/**
@@ -71,18 +72,18 @@ class MySQL implements BytectInterface, QueryInterface
 	 */
 	public function select($dbName = null) {
 
-		if(!isset($dbName)) {
-			return false;
-		}
+		if(isset($dbName)) {
+			
+			$this->_pdo = null;
 
-		$this->_pdo = null;
-
-		try{
-			$this->_pdo = new PDO('mysql:host=' . Config::get('mysql/host') . ';dbname=' . $dbName . ';charset=' . Config::get('mysql/charset'), Config::get('mysql/username'), Config::get('mysql/password'));
-			return "Selecting database: {$dbName} is successfull.";
-		} catch(PDOException $e) {
-			die($e->getMessage());
+			try{
+				$this->_pdo = new PDO('mysql:host=' . Config::get('mysql/host') . ';dbname=' . $dbName . ';charset=' . Config::get('mysql/charset'), Config::get('mysql/username'), Config::get('mysql/password'));
+				return "Selecting database: {$dbName} is successfull.";
+			} catch(PDOException $e) {
+				die($e->getMessage());
+			}
 		}
+		return false;
 	}
 
 	/**
@@ -186,8 +187,6 @@ class MySQL implements BytectInterface, QueryInterface
 				$x++;
 			}
 
-			die($values);
-
 			$sql = "INSERT INTO {$table} (`" . implode('`, `', $keys) . "`) VALUES ({$values})";
 
 			if(!$this->query($sql, $fields)->error()){
@@ -223,8 +222,6 @@ class MySQL implements BytectInterface, QueryInterface
 
 			$x++;
 		}
-
-		die($set);
 
 		$sql = "UPDATE {$table} SET {$set} WHERE id = {$id}";
 
