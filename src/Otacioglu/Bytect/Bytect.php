@@ -32,7 +32,8 @@ class Bytect implements BytectInterface, QueryInterface
 				
 				case 'mongodb':
 					return true;
-
+					break;
+					
 				default:
 					return $this->_driver = new MySQL();
 					break;
@@ -73,7 +74,7 @@ class Bytect implements BytectInterface, QueryInterface
 	 * The actual query to run
 	 * @param  string $sql    SQL query
 	 * @param  array  $params query parameters
-	 * @return void         
+	 * @return SQL        
 	 */
 	public function query($sql, $params = array())
 	{
@@ -84,7 +85,7 @@ class Bytect implements BytectInterface, QueryInterface
 	 * Insert objects to the database
 	 * @param  string $table  table name
 	 * @param  array  $fields fields to insert
-	 * @return void         
+	 * @return boolean         
 	 */
 	public function insert($table, $fields = array())
 	{
@@ -119,7 +120,7 @@ class Bytect implements BytectInterface, QueryInterface
 	 * @param  string $table   table name
 	 * @param  integer $id     object id
 	 * @param  array $fields   fields to update
-	 * @return void
+	 * @return boolean
 	 */
 	public function update($table, $id, $fields)
 	{
@@ -146,7 +147,7 @@ class Bytect implements BytectInterface, QueryInterface
 
 	/**
 	 * Returns the errors
-	 * @return mixed 
+	 * @return boolean 
 	 */
 	public function error()
 	{

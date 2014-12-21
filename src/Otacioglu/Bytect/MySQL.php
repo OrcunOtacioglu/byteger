@@ -90,7 +90,7 @@ class MySQL implements BytectInterface, QueryInterface
 	 * Query MySQL commands
 	 * @param  string $sql    actual sql query
 	 * @param  array  $params query parameters
-	 * @return object         
+	 * @return MySQL         
 	 */
 	public function query($sql, $params = array())
 	{
@@ -144,6 +144,7 @@ class MySQL implements BytectInterface, QueryInterface
 	/**
 	 * Get the selected rows
 	 * @param  string $table table name
+	 * @param  string $column
 	 * @param  array $where query parameters
 	 * @return void        
 	 */
@@ -167,7 +168,7 @@ class MySQL implements BytectInterface, QueryInterface
 	 * Insert objects to database
 	 * @param  string $table  table name
 	 * @param  array  $fields fields to insert into Database
-	 * @return void        
+	 * @return boolean        
 	 */
 	public function insert($table, $fields = array())
 	{
@@ -203,7 +204,7 @@ class MySQL implements BytectInterface, QueryInterface
 	 * @param  string $table  table name
 	 * @param  integer $id     record id
 	 * @param  array $fields fields to update
-	 * @return void         
+	 * @return boolean        
 	 */
 	public function update($table, $id, $fields)
 	{
@@ -253,7 +254,7 @@ class MySQL implements BytectInterface, QueryInterface
 
 	/**
 	 * Returns the errors
-	 * @return mixed 
+	 * @return boolean 
 	 */
 	public function error()
 	{
